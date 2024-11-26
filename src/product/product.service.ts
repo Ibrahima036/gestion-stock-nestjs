@@ -34,12 +34,12 @@ export class ProductService {
     return await this.productRepository.save(product);
   }
 
-  async findAll(): Promise<{ data: Product[] }> {
+  async findAll(): Promise<{ datas: Product[] }> {
     const products = await this.productRepository.find({
       relations: { category: true, supplier: true },
     });
 
-    return { data: products };
+    return { datas: products };
   }
 
   async find0neById(id: number): Promise<Product> {
