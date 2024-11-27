@@ -19,7 +19,7 @@ import { join } from 'path';
         from: '"No Reply" <no-reply@example.com>',
       },
       template: {
-        dir: join(__dirname , '/templates'),
+        dir: join(__dirname , 'templates'),
         adapter: new HandlebarsAdapter(),
         options: {
           strict: true,
