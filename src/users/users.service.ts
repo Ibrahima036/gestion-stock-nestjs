@@ -3,15 +3,24 @@ import { UserRepository } from 'databases/repositories/user.repository';
 import { UserCreateDto } from './dto/create-user.dto';
 import { User } from 'databases/entity/User.entity';
 import { hashPassword } from 'src/utils/bcrypt';
+import { EmailService } from 'src/email/email.service';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    private readonly userRepository: UserRepository,
+    private readonly emailService: EmailService,
+  ) {}
 
   async create({ username, password: pass }: UserCreateDto): Promise<User> {
     const password = hashPassword(pass);
-    console.log(pass, password);
     const user = this.userRepository.create({ username, password });
+
+    this.emailService.sendEmail(
+      user.username,
+      "Creation d'un nouveau compte",
+      'Ibrahima bah',
+    );
     return await this.userRepository.save(user);
   }
 

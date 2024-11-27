@@ -9,9 +9,13 @@ import { CategoryModule } from './category/category.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { User } from 'databases/entity/User.entity';
-import { APP_GUARD } from '@nestjs/core';
-import { AuthGuard } from './auth/auth.guard';
+import * as ejs from 'ejs';
 import { SupplierModule } from './supplier/supplier.module';
+import { MailerModule } from '@nestjs-modules/mailer';
+import * as path from 'path';
+import * as handlebars from 'handlebars';
+import { EmailModule } from './email/email.module';
+import { log } from 'console';
 
 const entities = [Product, Category, Supplier, Order, User];
 
@@ -32,6 +36,7 @@ const entities = [Product, Category, Supplier, Order, User];
     AuthModule,
     UsersModule,
     SupplierModule,
+    EmailModule,
   ],
   providers: [],
 })
