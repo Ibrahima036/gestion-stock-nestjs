@@ -16,10 +16,12 @@ export class UsersService {
     const password = hashPassword(pass);
     const user = this.userRepository.create({ username, password });
 
-    this.emailService.sendEmail(
+    this.emailService.sendEmailTemplate(
       user.username,
       "Creation d'un nouveau compte",
-      'Ibrahima bah',
+      'welcome',
+      user,
+      'image.webp',
     );
     return await this.userRepository.save(user);
   }

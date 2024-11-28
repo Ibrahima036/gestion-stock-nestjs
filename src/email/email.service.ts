@@ -1,18 +1,36 @@
 import { Injectable } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
+import path, { join } from 'path';
 
+interface SendEmailPayload {
+  [key: string]: any;
+}
 @Injectable()
 export class EmailService {
   constructor(private readonly mailerService: MailerService) {}
 
-  async sendEmail(to: string, subject: string, name: string) {
+  async sendEmailTemplate(
+    to: string,
+    subject: string,
+    templateName: string,
+    payload: SendEmailPayload,
+    file?: string,
+  ) {
+    console.log({ ...payload });
     await this.mailerService.sendMail({
       to,
       subject,
-      template: './welcome', // Le nom du template sans l'extension
+      template: templateName,
       context: {
-        name, // Données à injecter dans le template
+        ...payload,
       },
+      attachments: file
+        ? [
+            {
+              path: join(__dirname, '../../templates', file),
+            },
+          ]
+        : null,
     });
   }
 }
